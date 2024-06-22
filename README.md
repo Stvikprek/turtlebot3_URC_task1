@@ -73,7 +73,32 @@ This repo utilizes files from the following repositories:
   <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model turtlebot3_$(arg model) -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
   ```
   - Starts the node responsible for spawning the robot model using the initial positions and description written above
-
+  #### Actually Launching the World
+  - Run
+  ```
+  export TURTLEBOT3_MODEL=waffle
+  roslaunch turtlebot3_gazebo new_world.launch
+  ```
+  to start the Gazebo simulation (with the waffle model), it may take a while to load
+### SLAM and Mapping
+  - Assuming you have the world from before running, in a new terminal run
+  ```
+  export TURTLEBOT3_MODEL=waffle
+  roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=<your choice>
+  ```
+  This launch file is reponsible for starting the nodes responsible for performing Simultaneous Localization and Mapping (SLAM) for our simulated robot, with our preferred method for the same (default being gmapping). The launch file mainly starts the       
+  `turtlebot3_slam_gmapping` node which does all the SLAM computations by gathering simulated LiDAR scan data from the `/scan` topic and publishes it to the `/map` topic. This topic is subscribed to by rviz, which displays the gathered map.
+  (NOTE: Algorithms like gmapping require lots of parameters to perform their estimation, all these parameters are loaded in via a .yaml file using a `<rosparam>` tag in their specific launch file)
+  - Using the `turtlebot3_teleop_key` node of the `turtlebot3_teleop` package , the robot can be controlled with the keyboard to gather a map of the entire world
+  - Using the `map_server` node and running `rosrun map_server map_saver -f <path>` will save a map.pgm and map.yaml file in the specified path. `map_server` subscribes to the `/map` topic to do so.
+### Navigation
+  - In a new terminal with the simulation running, run
+  ```
+  export TURTLEBOT3_MODEL=waffle
+  roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<path to map file>
+  ```
+  This launch 
+  
 
   
 
