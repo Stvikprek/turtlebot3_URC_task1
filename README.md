@@ -97,7 +97,15 @@ This repo utilizes files from the following repositories:
   export TURTLEBOT3_MODEL=waffle
   roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=<path to map file>
   ```
-  This launch 
+  #### This launch file is responsible for opening four important nodes:
+  - `map_server` that loads the map file specified and provides it to `rviz`
+  - `rviz` that displays the saved map and provides a visualization of the whole process
+  - `amcl` which is used to localize the robot in the map (localization is process of locating the robot with respect to the world/environment). This node subscribes to topics such as `/odom` and `/imu`(both topics related to the motion and orientation of the robot)  to achieve this.
+  - `move_base` which is the node responsible for moving the robot to the desired destination by publishing to topics like `/cmd_vel` and  `/tf`
+  #### Providing an initial pose estimate
+  - In rviz, the real-time scan data and the map may not always overlap right from the start, which is because the amcl node's default parameters dont work for all environments, thus they have to be adjusted using initial pose estimates.
+  - Click the `Initial Pose Estimate` option in rviz, and click on the map where the robot is located in the map. The green arrow that now appears must face in the same direction as the robot. You can also use teleop from before to get better estimates
+  - Now using the `2D Nav Goal` option, we can set a destination for the robot to move to (this is achieved by rviz publishing the coordinate and orientation data to the `/move_base_simple/goal` topic which is subscribed to by the `move_base` node
   
 
   
