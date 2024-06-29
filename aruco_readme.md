@@ -54,7 +54,7 @@ while(1){
 ```
 - To write our results to an `output` file, we will use the `cv::VideoWriter` object. We must instantiate this object before the while loop and write each output frame into the file. The constructor's arguments are the following: output filename, the fourcc code (ASCII code to identify codecs),fps of the output and its size/resolution
 ```
-cv::VideoWriter out_write("output.mp4",cv::VideoWriter::fourcc('M','P','E','G'),30,Size(width,height));
+cv::VideoWriter out_write("output.avi",cv::VideoWriter::fourcc('M','J','P','G'),30,Size(width,height));
 ```
 where the width and height of the frame capture can be easily obtained using `cap.get(cv::CAP_PROP_FRAME_WIDTH)` and `cap.get(cv::CAP_PROP_FRAME_HEIGHT)`
 
