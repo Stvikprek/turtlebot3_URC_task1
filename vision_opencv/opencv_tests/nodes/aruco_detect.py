@@ -13,6 +13,7 @@ parameters =  aruco.DetectorParameters()
 detector = aruco.ArucoDetector(dictionary, parameters)
 def detect(imgmsg):
     img = br.imgmsg_to_cv2(imgmsg, "bgr8")
+    img = cv2.resize(img,(780,540),interpolation=cv2.INTER_LINEAR)
     corns,ids,rejects = detector.detectMarkers(img)
     print(ids)
     
