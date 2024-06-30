@@ -104,3 +104,4 @@ def detect(imgmsg):
     print(ids) # Here you can also draw onto the image (using previous methods) and publish it to some other ROS topic
 
 ```
+NOTE: You may need to resize the image using the `cv2.resize()` function before passing it into the detector for accurate detection.This is because the default parameters used by the detector object may reject actual legible markers. 
